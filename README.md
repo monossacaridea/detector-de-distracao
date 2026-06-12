@@ -1,62 +1,122 @@
-Alunas: Beatriz Lisbôa, Gabriela Caldana e Thaís da Mota
+# 🚗 Detector de Sono e Distração no Trânsito
 
-Detector de Sono e Distração no Trânsito
+**Alunas:**  
+- Beatriz Lisbôa
+- Gabriela Caldana
+- Thaís da Mota
 
-Este projeto utiliza visão computacional para detectar a presença de um rosto em tempo real através da webcam, como etapa inicial de um sistema de monitoramento de sono, cansaço e distração no trânsito.
+## 📖 Sobre o Projeto
 
-Tecnologias
+Este projeto utiliza **Visão Computacional** para detectar a presença de um rosto em tempo real através da webcam, servindo como etapa inicial de um sistema de monitoramento de **sono, cansaço e distração no trânsito**.
 
-● Python
+O objetivo é contribuir para a segurança viária por meio da identificação de sinais que possam indicar fadiga ou falta de atenção do motorista.
 
-● OpenCV
+---
 
-⚙️ Como Executar (Ambiente Local)
-Clonar ou criar o arquivo: Salve o código acima em um arquivo chamado main.py.
+## 🛠️ Tecnologias Utilizadas
 
-Instalar Dependências: Abra o terminal da sua IDE e instale o OpenCV rodando o gerenciador de pacotes:
+- Python
+- OpenCV
 
-Bash
+---
+
+## ⚙️ Como Executar
+
+### 1. Salve o código
+
+Salve o código em um arquivo chamado:
+
+```bash
+main.py
+```
+
+### 2. Instale as dependências
+
+Abra o terminal da sua IDE e execute:
+
+```bash
 pip install opencv-python
-Executar o Programa: No mesmo terminal, execute o script:
+```
 
-Bash
+### 3. Execute o programa
+
+No mesmo terminal, execute:
+
+```bash
 python main.py
-Encerrar: Clique na janela do vídeo e pressione a tecla q do teclado.
+```
 
-🚀 Status de Funcionalidades
-🔴 Concluído (Funcionalidades Parciais)
-[x] Inicialização e captura estável de fluxo de vídeo via webcam.
+### 4. Encerrar a aplicação
 
-[x] Pré-processamento de frames (conversão BGR para Escala de Cinza).
+Clique na janela do vídeo e pressione a tecla:
 
-[x] Detecção de presença de rosto em tempo real (Haar Cascade Spatial Filter).
+```text
+q
+```
 
-[x] Feedback visual na tela por meio de caixas delimitadoras (bounding boxes).
+---
 
-🟡 Em Desenvolvimento / Próximos Passos
-[ ] Detecção de Olhos e Boca: Mapear a região ocular e labial para avaliar abertura.
+## 🚀 Status das Funcionalidades
 
-[ ] Cálculo de EAR (Eye Aspect Ratio): Algoritmo matemático para monitorar a frequência e tempo de fechamento dos olhos.
+### ✅ Concluído
 
-[ ] Análise Quântica de Piscadas: Diferenciar piscadas naturais de momentos de micro-sono (olhos fechados por mais de 1.5 a 2 segundos).
+- [x] Inicialização e captura estável de vídeo via webcam.
+- [x] Pré-processamento de frames (conversão de BGR para escala de cinza).
+- [x] Detecção de rosto em tempo real utilizando Haar Cascade.
+- [x] Feedback visual através de caixas delimitadoras (*bounding boxes*).
 
-[ ] Detecção de Distração (Head Pose Estimation): Identificar se o motorista está virando o rosto para os lados ou olhando para baixo por muito tempo.
+### 🔄 Em Desenvolvimento
 
-[ ] Sistema de Alerta Embutido: Emissão de bips sonoros e avisos visuais na tela quando anomalias forem detectadas.
+- [ ] Detecção de olhos e boca para avaliação de abertura.
+- [ ] Implementação do cálculo de **EAR (Eye Aspect Ratio)**.
+- [ ] Diferenciação entre piscadas naturais e episódios de micro-sono.
+- [ ] Detecção de distração por meio de **Head Pose Estimation**.
+- [ ] Sistema de alerta visual e sonoro.
 
-🍓 Planejamento de Hardware: Raspberry Pi
-Como o projeto visa uma aplicação real no ecossistema automotivo, o código será embarcado em um Raspberry Pi. Abaixo constam os desafios técnicos e estratégias mapeadas para essa transição:
+---
 
-Otimização de Processamento: O algoritmo Haar Cascade com OpenCV é leve, o que favorece o hardware do Raspberry Pi. No entanto, se utilizarmos modelos baseados em marcos faciais pesados (como Dlib com 68 pontos), configuraremos versões reduzidas de modelos (como o modelo de 5 pontos ou MediaPipe Iris) para manter uma alta taxa de quadros por segundo (FPS).
+## 🍓 Planejamento de Hardware: Raspberry Pi
 
-Alimentação e Periféricos:
+Como o projeto possui foco em uma aplicação real no contexto automotivo, está prevista sua execução em um **Raspberry Pi**.
 
-Uso de uma Câmera Pi (PiNoIR ou Módulo de Câmera padrão) ou Webcam USB estável.
+### ⚡ Otimização de Processamento
 
-Acoplamento de um Buzzer Ativo (5V) conectado aos pinos GPIO do Raspberry Pi para atuar como alarme físico sonoro dentro do veículo.
+O algoritmo **Haar Cascade** apresenta baixo custo computacional, sendo adequado para o Raspberry Pi.
 
-Execução Autônoma: Configuração de scripts de inicialização automática (Systemd Service ou cron) para inicializar a IA assim que o Raspberry Pi receber energia do veículo.
+Caso sejam necessários modelos mais avançados para detecção facial, serão avaliadas alternativas leves, como:
 
+- Dlib (modelo de 5 pontos)
+- MediaPipe Iris
 
------------------------------------------------------------------
-Projeto desenvolvido para a disciplina de Inteligência Artificial.
+O objetivo é manter uma boa taxa de quadros por segundo (**FPS**) sem comprometer o desempenho.
+
+### 🔌 Alimentação e Periféricos
+
+- Utilização de **Câmera Pi (Pi NoIR)** ou webcam USB.
+- Integração de um **Buzzer Ativo 5V** aos pinos GPIO para emissão de alertas sonoros.
+
+### 🤖 Execução Autônoma
+
+Implementação de inicialização automática da aplicação utilizando:
+
+- Systemd Service
+- Cron
+
+Dessa forma, o sistema será iniciado automaticamente quando o Raspberry Pi receber energia do veículo.
+
+---
+
+## 🎯 Objetivo Futuro
+
+Desenvolver um sistema embarcado capaz de:
+
+- Monitorar sinais de fadiga do motorista;
+- Detectar distrações prolongadas;
+- Emitir alertas preventivos em tempo real;
+- Contribuir para a redução de acidentes causados por desatenção ou sonolência.
+
+---
+
+## 📚 Disciplina
+
+Projeto desenvolvido para a disciplina de **Inteligência Artificial**.
