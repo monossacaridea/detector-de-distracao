@@ -43,7 +43,21 @@ Ao encerrar, é exibido um **resumo da sessão** (total de bocejos, episódios d
 
 ## Como Executar
 
-### 1. Instale as dependências
+> ⚠️ **Versão do Python:** use **Python 3.11 ou 3.12**. O **Python 3.13 ainda não
+> é suportado de forma estável pelo MediaPipe** e causa o erro
+> `module 'mediapipe' has no attribute 'solutions'`. Veja a seção
+> [Solução de Problemas](#solução-de-problemas).
+
+### 1. (Recomendado) Crie um ambiente virtual com Python 3.12
+
+Isola as dependências e evita conflitos com outras versões instaladas:
+
+```powershell
+py -3.12 -m venv .venv
+.venv\Scripts\Activate.ps1     # No Windows (PowerShell)
+```
+
+### 2. Instale as dependências
 
 No terminal, dentro da pasta do projeto:
 
@@ -51,17 +65,53 @@ No terminal, dentro da pasta do projeto:
 pip install -r requirements.txt
 ```
 
-### 2. Execute o programa
+### 3. Execute o programa
 
 ```bash
 python main.py
 ```
 
-### 3. Encerrar a aplicação
+### 4. Encerrar a aplicação
 
 Clique na janela do vídeo e pressione a tecla **Q**. O resumo da sessão aparecerá no terminal.
 
 > **Observação sobre o som:** o alerta sonoro utiliza o módulo `winsound`, nativo do **Windows**. Em outros sistemas operacionais o programa continua funcionando normalmente, apenas sem o som.
+
+---
+
+## Solução de Problemas
+
+### `module 'mediapipe' has no attribute 'solutions'`
+
+Esse erro ocorre quando o projeto é executado no **Python 3.13** (ou mais novo),
+ainda não suportado de forma estável pelo MediaPipe.
+
+**Como verificar sua versão do Python:**
+
+```powershell
+python --version
+```
+
+**Solução — usar o Python 3.12:**
+
+1. Instale o **Python 3.12** em [python.org/downloads](https://www.python.org/downloads/)
+   (marque *"Add Python to PATH"* durante a instalação).
+2. Na pasta do projeto, crie um ambiente virtual com o 3.12 e instale tudo nele:
+
+   ```powershell
+   py -3.12 -m venv .venv
+   .venv\Scripts\Activate.ps1
+   pip install -r requirements.txt
+   python main.py
+   ```
+
+O ambiente `.venv` fica isolado e já está no `.gitignore`, sem afetar o restante do sistema.
+
+### A câmera não abre
+
+- Feche outros programas que possam estar usando a webcam (Teams, Zoom, etc.).
+- Se houver mais de uma câmera, troque o índice em [`main.py`](main.py):
+  `cv2.VideoCapture(0)` → `cv2.VideoCapture(1)`.
 
 ---
 
