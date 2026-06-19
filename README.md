@@ -1,11 +1,11 @@
-# 🚗 Detector de Sono e Distração no Trânsito
+Detector de Sono e Distração no Trânsito
 
 **Alunas:**  
 - Beatriz Lisbôa
 - Gabriela Caldana
 - Thaís da Mota
 
-## 📖 Sobre o Projeto
+## Sobre o Projeto
 
 Este projeto utiliza **Visão Computacional** para detectar a presença de um rosto em tempo real através da webcam, servindo como etapa inicial de um sistema de monitoramento de **sono, cansaço e distração no trânsito**.
 
@@ -13,14 +13,14 @@ O objetivo é contribuir para a segurança viária por meio da identificação d
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - Python
 - OpenCV
 
 ---
 
-## ⚙️ Como Executar
+## Como Executar
 
 ### 1. Salve o código
 
@@ -56,16 +56,16 @@ q
 
 ---
 
-## 🚀 Status das Funcionalidades
+## Status das Funcionalidades
 
-### ✅ Concluído
+### Concluído
 
 - [x] Inicialização e captura estável de vídeo via webcam.
 - [x] Pré-processamento de frames (conversão de BGR para escala de cinza).
 - [x] Detecção de rosto em tempo real utilizando Haar Cascade.
 - [x] Feedback visual através de caixas delimitadoras (*bounding boxes*).
 
-### 🔄 Em Desenvolvimento
+### Em Desenvolvimento
 
 - [ ] Detecção de olhos e boca para avaliação de abertura.
 - [ ] Implementação do cálculo de **EAR (Eye Aspect Ratio)**.
@@ -75,11 +75,11 @@ q
 
 ---
 
-## 🍓 Planejamento de Hardware: Raspberry Pi
+## Planejamento de Hardware: Raspberry Pi
 
 Como o projeto possui foco em uma aplicação real no contexto automotivo, está prevista sua execução em um **Raspberry Pi**.
 
-### ⚡ Otimização de Processamento
+### Otimização de Processamento
 
 O algoritmo **Haar Cascade** apresenta baixo custo computacional, sendo adequado para o Raspberry Pi.
 
@@ -90,12 +90,12 @@ Caso sejam necessários modelos mais avançados para detecção facial, serão a
 
 O objetivo é manter uma boa taxa de quadros por segundo (**FPS**) sem comprometer o desempenho.
 
-### 🔌 Alimentação e Periféricos
+### Alimentação e Periféricos
 
 - Utilização de **Câmera Pi (Pi NoIR)** ou webcam USB.
 - Integração de um **Buzzer Ativo 5V** aos pinos GPIO para emissão de alertas sonoros.
 
-### 🤖 Execução Autônoma
+### Execução Autônoma
 
 Implementação de inicialização automática da aplicação utilizando:
 
@@ -106,7 +106,7 @@ Dessa forma, o sistema será iniciado automaticamente quando o Raspberry Pi rece
 
 ---
 
-## 🎯 Objetivo Futuro
+## Objetivo Futuro
 
 Desenvolver um sistema embarcado capaz de:
 
@@ -117,6 +117,6 @@ Desenvolver um sistema embarcado capaz de:
 
 ---
 
-## 📚 Disciplina
+## Disciplina
 
 Projeto desenvolvido para a disciplina de **Inteligência Artificial**.
