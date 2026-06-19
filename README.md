@@ -1,58 +1,94 @@
-## Detector de Sono e Distração no Trânsito
+# Detector de Sono, Bocejo e Distração no Trânsito
 
-**Alunas:**  
+**Alunas:**
 - Beatriz Lisbôa
 - Gabriela Caldana
 - Thaís da Mota
 
 ## Sobre o Projeto
 
-Este projeto utiliza **Visão Computacional** para detectar a presença de um rosto em tempo real através da webcam, servindo como etapa inicial de um sistema de monitoramento de **sono, cansaço e distração no trânsito**.
+Este projeto utiliza **Visão Computacional** e **Inteligência Artificial** para monitorar, em tempo real através da webcam, sinais de **sono, cansaço (bocejo) e distração** de um motorista.
 
-O objetivo é contribuir para a segurança viária por meio da identificação de sinais que possam indicar fadiga ou falta de atenção do motorista.
+A partir da imagem da câmera, o sistema localiza o rosto, mede a abertura dos olhos e da boca e identifica comportamentos de risco, emitindo **alertas visuais e sonoros** imediatos. O objetivo é contribuir para a segurança viária, ajudando a reduzir acidentes causados por fadiga ou desatenção.
 
 ---
 
 ## Tecnologias Utilizadas
 
-- Python
-- OpenCV
+- **Python**
+- **OpenCV** — captura de vídeo e desenho da interface (HUD)
+- **MediaPipe Face Mesh** — malha facial de 468 pontos (landmarks)
+- **NumPy** — cálculos das métricas EAR e MAR
+
+---
+
+## Como Funciona
+
+Em vez de apenas verificar a presença de olhos/rosto, o sistema calcula **métricas reais** a partir dos pontos faciais detectados pelo MediaPipe:
+
+| Sinal | Métrica | Como é detectado |
+|-------|---------|------------------|
+| **Sono** | **EAR** (Eye Aspect Ratio) | Olhos fechados por vários frames consecutivos (EAR abaixo do limiar). |
+| **Bocejo** | **MAR** (Mouth Aspect Ratio) | Boca bem aberta de forma sustentada (MAR acima do limiar), evitando confundir com fala. |
+| **Distração** | Presença do rosto | Rosto ausente do enquadramento por vários frames consecutivos. |
+
+Cada evento gera:
+- **Alerta visual** no painel (HUD), com cores e indicadores;
+- **Alerta sonoro** pelo computador (tons distintos para sono, bocejo e distração);
+- **Registro em log** (`eventos_sessao.csv`) com horário e métricas.
+
+Ao encerrar, é exibido um **resumo da sessão** (total de bocejos, episódios de sono e distrações).
 
 ---
 
 ## Como Executar
 
-### 1. Salve o código
+### 1. Instale as dependências
 
-Salve o código em um arquivo chamado:
-
-```bash
-main.py
-```
-
-### 2. Instale as dependências
-
-Abra o terminal da sua IDE e execute:
+No terminal, dentro da pasta do projeto:
 
 ```bash
-pip install opencv-python
+pip install -r requirements.txt
 ```
 
-### 3. Execute o programa
-
-No mesmo terminal, execute:
+### 2. Execute o programa
 
 ```bash
 python main.py
 ```
 
-### 4. Encerrar a aplicação
+### 3. Encerrar a aplicação
 
-Clique na janela do vídeo e pressione a tecla:
+Clique na janela do vídeo e pressione a tecla **Q**. O resumo da sessão aparecerá no terminal.
 
-```text
-q
+> **Observação sobre o som:** o alerta sonoro utiliza o módulo `winsound`, nativo do **Windows**. Em outros sistemas operacionais o programa continua funcionando normalmente, apenas sem o som.
+
+---
+
+## Ajuste de Sensibilidade
+
+Os limiares ficam no topo de [`monitor.py`](monitor.py) e podem ser ajustados conforme a iluminação e a câmera usadas na apresentação:
+
+```python
+EAR_LIMIAR = 0.21       # menor = mais sensível a olhos fechados
+FRAMES_SONO = 15
+MAR_LIMIAR = 0.60       # menor = mais sensível a bocejos
+FRAMES_BOCEJO = 15
+FRAMES_DISTRACAO = 20
 ```
+
+---
+
+## Estrutura do Projeto
+
+| Arquivo | Responsabilidade |
+|---------|------------------|
+| `main.py` | Ponto de entrada: câmera, loop principal e resumo da sessão. |
+| `monitor.py` | Detecção facial (MediaPipe), cálculo de EAR/MAR e máquina de estados. |
+| `hud.py` | Interface profissional (HUD) desenhada sobre o vídeo. |
+| `alerts.py` | Alertas sonoros não-bloqueantes e registro em log CSV. |
+| `requirements.txt` | Dependências do projeto. |
+| `detector_rosto_legado.py` | Versão inicial (Haar Cascade), mantida como referência histórica. |
 
 ---
 
@@ -60,60 +96,20 @@ q
 
 ### Concluído
 
-- [x] Inicialização e captura estável de vídeo via webcam.
-- [x] Pré-processamento de frames (conversão de BGR para escala de cinza).
-- [x] Detecção de rosto em tempo real utilizando Haar Cascade.
-- [x] Feedback visual através de caixas delimitadoras (*bounding boxes*).
+- [x] Captura estável de vídeo via webcam.
+- [x] Detecção facial em tempo real com **MediaPipe Face Mesh** (468 pontos).
+- [x] Cálculo de **EAR (Eye Aspect Ratio)** para detecção de sono.
+- [x] Cálculo de **MAR (Mouth Aspect Ratio)** para detecção de **bocejo**.
+- [x] Detecção de distração por ausência prolongada do rosto.
+- [x] Sistema de **alerta visual e sonoro**.
+- [x] Interface profissional (HUD) com status, indicadores, contadores e métricas.
+- [x] Registro de eventos em log (CSV) e resumo de sessão.
 
-### Em Desenvolvimento
+### Possíveis evoluções futuras
 
-- [ ] Detecção de olhos e boca para avaliação de abertura.
-- [ ] Implementação do cálculo de **EAR (Eye Aspect Ratio)**.
-- [ ] Diferenciação entre piscadas naturais e episódios de micro-sono.
-- [ ] Detecção de distração por meio de **Head Pose Estimation**.
-- [ ] Sistema de alerta visual e sonoro.
-
----
-
-## Planejamento de Hardware: Raspberry Pi
-
-Como o projeto possui foco em uma aplicação real no contexto automotivo, está prevista sua execução em um **Raspberry Pi**.
-
-### Otimização de Processamento
-
-O algoritmo **Haar Cascade** apresenta baixo custo computacional, sendo adequado para o Raspberry Pi.
-
-Caso sejam necessários modelos mais avançados para detecção facial, serão avaliadas alternativas leves, como:
-
-- Dlib (modelo de 5 pontos)
-- MediaPipe Iris
-
-O objetivo é manter uma boa taxa de quadros por segundo (**FPS**) sem comprometer o desempenho.
-
-### Alimentação e Periféricos
-
-- Utilização de **Câmera Pi (Pi NoIR)** ou webcam USB.
-- Integração de um **Buzzer Ativo 5V** aos pinos GPIO para emissão de alertas sonoros.
-
-### Execução Autônoma
-
-Implementação de inicialização automática da aplicação utilizando:
-
-- Systemd Service
-- Cron
-
-Dessa forma, o sistema será iniciado automaticamente quando o Raspberry Pi receber energia do veículo.
-
----
-
-## Objetivo Futuro
-
-Desenvolver um sistema embarcado capaz de:
-
-- Monitorar sinais de fadiga do motorista;
-- Detectar distrações prolongadas;
-- Emitir alertas preventivos em tempo real;
-- Contribuir para a redução de acidentes causados por desatenção ou sonolência.
+- [ ] Detecção de distração por **Head Pose Estimation** (cabeça virada, não só ausente).
+- [ ] Diferenciação fina entre piscadas naturais e episódios de micro-sono.
+- [ ] Dashboard de estatísticas pós-sessão a partir do log.
 
 ---
 
