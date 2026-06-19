@@ -20,6 +20,14 @@ import cv2
 import numpy as np
 import mediapipe as mp
 
+# Em algumas instalações (especialmente Python 3.13), "import mediapipe as mp"
+# não carrega automaticamente o namespace "mp.solutions". Importar o submódulo
+# face_mesh de forma explícita garante que ele seja inicializado corretamente.
+try:
+    mp_face_mesh = mp.solutions.face_mesh
+except AttributeError:
+    from mediapipe.python.solutions import face_mesh as mp_face_mesh
+
 # --------------------------------------------------------------------------- #
 # Limiares e configurações (fáceis de ajustar antes da apresentação)
 # --------------------------------------------------------------------------- #
@@ -99,7 +107,7 @@ class DriverMonitor:
     """Processa frames da webcam e mantém a máquina de estados do motorista."""
 
     def __init__(self):
-        self.mp_face_mesh = mp.solutions.face_mesh
+        self.mp_face_mesh = mp_face_mesh
         self.face_mesh = self.mp_face_mesh.FaceMesh(
             max_num_faces=1,
             refine_landmarks=True,
